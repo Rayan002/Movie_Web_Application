@@ -8,7 +8,7 @@ Check out the live demo of the application [here](https://movie-web-application1
 
 ## Sample Credentials
 
-To experience the application, you can use the following credentials:
+To experience the application, you can use the following credentials or you can create a new credentials by clicking sign up:
 - **Username:** <span style="color: #ff416c;">helloworld@gmail.com</span>
 - **Password:** <span style="color: #ff416c;">123456789</span>
 
