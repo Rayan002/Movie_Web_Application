@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolkus_Movie</title>
+    <!-- font awesome icons cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- custom css -->
+    <link rel="stylesheet" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.11.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            --bg: #f7f7f8;
+            --hover-bg: #FFE5F4;
+            --hover-text: #d30b0b;
+            text-align: center;
+            background: var(--bg);
+            padding: 1.5em;
+            padding-block: 1.8em;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+            transition: .3s cubic-bezier(.6, .4, 0, 1), transform .15s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
+
+        .card__body {
+            color: #464853;
+            line-height: 1.5em;
+            font-size: 1em;
+        }
+
+        .card> :not(span) {
+            transition: .3s cubic-bezier(.6, .4, 0, 1);
+        }
+
+        .card>strong {
+            display: block;
+            font-size: 1.4rem;
+            letter-spacing: -.035em;
+        }
+
+        .card span {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--hover-text);
+            border-radius: 5px;
+            font-weight: bold;
+            top: 100%;
+            transition: all .3s cubic-bezier(.6, .4, 0, 1);
+        }
+
+        .card:hover span {
+            top: 0;
+            font-size: 1.2em;
+        }
+
+        .card:hover {
+            background: var(--hover-bg);
+        }
+
+        .card:hover>div,
+        .card:hover>strong {
+            opacity: 0;
+        }
+
+        .movie-poster img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .playlist-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.playlist-button {
+    padding: 10px 20px;
+    background-color: #b10606; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.playlist-button:hover {
+    background-color: #f7f4f4;
+    color: black;
+}
+
+
+
+.playlist-container1 {
+    position: absolute;
+    top: 10px;
+    right: 120px;
+}
+
+.playlist-button {
+    padding: 10px 20px;
+    background-color: #b10606; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.playlist-button:hover {
+    background-color: #f7f4f4; 
+    color: black;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="logo">
+            <div class="container">
+                <p>Wolkus<span>MovieDB.</span></p>
+            </div>
+            <div class="playlist-container1">
+                <a href="playlist.html"><button class="playlist-button">PlayList</button></a>
+            </div>
+
+            <div class="playlist-container">
+                <a href="index.html"><button class="playlist-button">LogOut</button></a>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <div class="search-element">
+                <h3>Search Movie:</h3>
+                <input type="text" class="form-control" placeholder="Search Movie Title ..." id="movie-search-box"
+                    onkeyup="findMovies()" onclick="findMovies()">
+                <div class="search-list" id="search-list">
+                
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="container">
+            <br>
+            <div class="result-container">
+                <div class="result-grid" id="result-grid">
+                    <!-- card -->
+                    <div class="card movie-item" data-id="tt0816692">
+                        <div class="movie-poster">
+                            <img src="interstellar.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Interstellar</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: PG-13</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt1375666">
+                        <div class="movie-poster">
+                            <img src="inception.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Inception</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: PG-13</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt0468569">
+                        <div class="movie-poster">
+                            <img src="dark.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">The Dark Knight</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: PG-13</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt3896198">
+                        <div class="movie-poster">
+                            <img src="medium-cover.jpg " alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Guardians of the Galaxy Vol. 2 </strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: PG-13</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class ="card movie-item" data-id="tt0499549">
+                        <div class="movie-poster">
+                            <img src="avatar.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Avatar</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: PG-13</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt0120338">
+                        <div class="movie-poster">
+                            <img src="titanic.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Titanic</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: PG-13</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt0133093">
+                        <div class="movie-poster">
+                            <img src="matrix.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">The Matrix</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: R</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt7286456">
+                        <div class="movie-poster">
+                            <img src="joker.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Joker</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: R</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                    <div class="card movie-item" data-id="tt0110912">
+                        <div class="movie-poster">
+                            <img src="pulp.jpg" alt="movie poster">
+                        </div>
+                        <strong class="movie-title">Pulp Fiction</strong>
+                        <div class="card__body">
+                            <p class="movie-rating">Rating: R</p>
+                        </div>
+                        <span>More Info</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end of result container -->
+    </div>
+
+    <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+  <aside>
+    <p>Copyright © 2024 - All right reserved by Wolkus<br>
+    Designed and Developed by MOHAMED RAYAN</p>
+  </aside>
+</footer>
+
+    <!-- movie app js -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
